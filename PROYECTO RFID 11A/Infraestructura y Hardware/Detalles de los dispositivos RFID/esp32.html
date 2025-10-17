@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema RFID con ESP32 | Documentación Completa IoT</title>
+    <meta name="description" content="Tutorial completo del sistema RFID con ESP32. Incluye código Arduino, conectividad WiFi, configuración de tarjetas y aplicaciones IoT.">
+    <meta name="keywords" content="RFID, ESP32, Arduino, WiFi, IoT, RC522, tutorial, documentación">
+    <meta name="author" content="RFID Projects Documentation">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Sistema RFID con ESP32">
+    <meta property="og:description" content="Tutorial completo del sistema RFID con ESP32. Código Arduino y conectividad WiFi incluidos.">
+    <meta property="og:type" content="website">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="nav-brand">
+                    <a href="index.html" class="logo-link" data-testid="logo-link">
+                        <h1 class="logo">RFID Projects</h1>
+                    </a>
+                </div>
+                
+                <nav class="nav-desktop">
+                    <a href="index.html" class="nav-link" data-testid="nav-home">Inicio</a>
+                    <a href="raspberry-pi.html" class="nav-link" data-testid="nav-raspberry-pi">RFID + Raspberry Pi</a>
+                    <a href="esp32.html" class="nav-link active" data-testid="nav-esp32">RFID + ESP32</a>
+                </nav>
+                
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" data-testid="mobile-menu-toggle">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <nav class="nav-mobile" id="mobileMenu">
+                <a href="index.html" class="nav-link-mobile" data-testid="mobile-nav-home">Inicio</a>
+                <a href="raspberry-pi.html" class="nav-link-mobile" data-testid="mobile-nav-raspberry-pi">RFID + Raspberry Pi</a>
+                <a href="esp32.html" class="nav-link-mobile active" data-testid="mobile-nav-esp32">RFID + ESP32</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="content-layout">
+                <!-- Sidebar Navigation -->
+                <aside class="sidebar">
+                    <div class="sidebar-card">
+                        <h3 class="sidebar-title">Navegación del Proyecto</h3>
+                        <nav class="sidebar-nav">
+                            <a href="#esp32-overview" class="sidebar-link" data-testid="sidebar-esp32-overview">Descripción General</a>
+                            <a href="#esp32-video" class="sidebar-link" data-testid="sidebar-esp32-video">Video Tutorial</a>
+                            <a href="#esp32-setup" class="sidebar-link" data-testid="sidebar-esp32-setup">Configuración</a>
+                            <a href="#esp32-card-config" class="sidebar-link" data-testid="sidebar-esp32-card-config">Configuración de Tarjetas</a>
+                            <a href="#esp32-main-code" class="sidebar-link" data-testid="sidebar-esp32-main-code">Código Principal</a>
+                            <a href="#esp32-wifi" class="sidebar-link" data-testid="sidebar-esp32-wifi">Conectividad WiFi</a>
+                        </nav>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="content-main">
+                    <!-- Project Header -->
+                    <div class="page-header">
+                        <h1 class="page-title" style="color: var(--accent)">
+                            Sistema RFID con ESP32
+                        </h1>
+                        <p class="page-description">
+                            Implementación de un sistema RFID utilizando ESP32 con conectividad WiFi para 
+                            aplicaciones IoT. Incluye configuración de tarjetas y comunicación inalámbrica.
+                        </p>
+                    </div>
+
+                    <!-- Overview Section -->
+                    <section id="esp32-overview" class="card" style="margin-bottom: 3rem;">
+                        <h2 class="section-title">Descripción General del Proyecto</h2>
+                        <div style="max-width: none;">
+                            <p style="margin-bottom: 1rem;">
+                                Este proyecto implementa un sistema RFID completo utilizando el microcontrolador 
+                                ESP32, aprovechando sus capacidades de conectividad WiFi para crear una solución 
+                                IoT robusta.
+                            </p>
+                            
+                            <p style="margin-bottom: 1rem;">
+                                El sistema permite la lectura de tarjetas RFID, configuración remota via WiFi y 
+                                procesamiento en tiempo real de los datos de identificación.
+                            </p>
+                            
+                            <div class="highlight-box accent" style="margin: 1.5rem 0;">
+                                <h3 class="highlight-title">Ventajas del ESP32:</h3>
+                                <ul class="highlight-list">
+                                    <li>Conectividad WiFi y Bluetooth integrada</li>
+                                    <li>Procesador dual-core a 240MHz</li>
+                                    <li>Bajo consumo energético</li>
+                                    <li>Compatible con Arduino IDE</li>
+                                    <li>Múltiples interfaces de comunicación (SPI, I2C, UART)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Video Tutorial Section -->
+                    <section id="esp32-video" class="video-container">
+                        <h2 class="video-title">Video Tutorial</h2>
+                        <div class="video-wrapper">
+                            <iframe
+                                src="https://www.youtube.com/embed/ac5CR_bBg74?si=b2a7VWUX679dEeka"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen
+                                title="Tutorial Sistema RFID con ESP32"
+                                data-testid="video-ac5CR_bBg74">
+                            </iframe>
+                        </div>
+                        <p class="video-description">
+                            Tutorial detallado que muestra la implementación completa del sistema RFID con ESP32.
+                        </p>
+                    </section>
+
+                    <!-- Setup Guide Section -->
+                    <section id="esp32-setup" class="card" style="margin-bottom: 3rem;">
+                        <h2 class="section-title">Configuración del Entorno</h2>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div class="step-guide accent">
+                                <h3 class="step-title">Configurar Arduino IDE</h3>
+                                <div class="step-content">
+                                    <p style="margin-bottom: 0.75rem;">Instala el soporte para ESP32 en Arduino IDE:</p>
+                                    <ol style="list-style: decimal; list-style-position: inside; margin: 0.5rem 0; font-size: 0.875rem;">
+                                        <li style="margin-bottom: 0.5rem;">Abrir Arduino IDE → Archivo → Preferencias</li>
+                                        <li style="margin-bottom: 0.5rem;">Agregar URL del gestor de placas ESP32:</li>
+                                    </ol>
+                                    <pre style="margin: 0.75rem 0; font-size: 0.75rem;"><code>https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</code></pre>
+                                    <ol style="list-style: decimal; list-style-position: inside; margin: 0.75rem 0 0; font-size: 0.875rem;" start="3">
+                                        <li style="margin-bottom: 0.5rem;">Herramientas → Placa → Gestor de placas</li>
+                                        <li style="margin-bottom: 0.5rem;">Buscar "ESP32" e instalar "ESP32 by Espressif Systems"</li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <div class="step-guide">
+                                <h3 class="step-title">Instalar Librerías Necesarias</h3>
+                                <div class="step-content">
+                                    <p style="margin-bottom: 0.75rem;">Librerías requeridas para el proyecto:</p>
+                                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                        <div style="display: flex; align-items: center; padding: 0.5rem; background: var(--background); border-radius: var(--radius);">
+                                            <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                            <strong>MFRC522</strong> - Para comunicación con el lector RFID
+                                        </div>
+                                        <div style="display: flex; align-items: center; padding: 0.5rem; background: var(--background); border-radius: var(--radius);">
+                                            <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                            <strong>WiFi</strong> - Conectividad WiFi (incluida en ESP32)
+                                        </div>
+                                        <div style="display: flex; align-items: center; padding: 0.5rem; background: var(--background); border-radius: var(--radius);">
+                                            <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                            <strong>ArduinoJson</strong> - Manejo de datos JSON
+                                        </div>
+                                        <div style="display: flex; align-items: center; padding: 0.5rem; background: var(--background); border-radius: var(--radius);">
+                                            <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                            <strong>WebServer</strong> - Servidor web integrado
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Card Configuration Code Section -->
+                    <section id="esp32-card-config" class="code-block">
+                        <div class="card">
+                            <h2 class="code-title">Configuración de Tarjetas RFID</h2>
+                            
+                            <div class="code-filename">
+                                <p style="font-size: 0.875rem;">
+                                    Archivo: <code>card_holder_configure.ino</code>
+                                </p>
+                            </div>
+                            
+                            <div style="background: var(--background); border: 1px solid var(--border); border-radius: var(--radius);">
+                                <pre class="language-cpp"><code class="language-cpp" data-testid="code-content">/*
+ * Configuración de Tarjetas RFID para ESP32
+ * Este código permite configurar y registrar nuevas tarjetas RFID
+ * en el sistema mediante interfaz serie
+ */
+
+#include <SPI.h>
+#include <MFRC522.h>
+#include <WiFi.h>
+#include <EEPROM.h>
+
+// Definición de pines para ESP32
+#define RST_PIN    22
+#define SS_PIN     5
+#define SCK_PIN    18
+#define MOSI_PIN   23
+#define MISO_PIN   19
+
+// Configuración WiFi
+const char* ssid = "TU_RED_WIFI";
+const char* password = "TU_PASSWORD";
+
+// Inicialización del módulo RFID
+MFRC522 mfrc522(SS_PIN, RST_PIN);
+
+// Estructura para almacenar datos de tarjeta
+struct CardData {
+    byte uid[4];
+    char name[32];
+    bool active;
+};
+
+// Array para almacenar hasta 50 tarjetas
+CardData registeredCards[50];
+int cardCount = 0;
+
+void setup() {
+    Serial.begin(115200);
+    
+    // Inicializar SPI y RFID
+    SPI.begin(SCK_PIN, MISO_PIN, MOSI_PIN, SS_PIN);
+    mfrc522.PCD_Init();
+    
+    // Inicializar EEPROM
+    EEPROM.begin(4096);
+    
+    // Cargar tarjetas desde EEPROM
+    loadCardsFromEEPROM();
+    
+    // Conectar a WiFi
+    connectToWiFi();
+    
+    Serial.println("=================================");
+    Serial.println("Sistema de Configuración RFID ESP32");
+    Serial.println("=================================");
+    Serial.println("Comandos disponibles:");
+    Serial.println("1 - Registrar nueva tarjeta");
+    Serial.println("2 - Listar tarjetas registradas");
+    Serial.println("3 - Eliminar tarjeta");
+    Serial.println("4 - Modo lectura continua");
+    Serial.println("=================================");
+    
+    delay(1000);
+}
+
+void loop() {
+    // Verificar comandos por Serial
+    if (Serial.available() > 0) {
+        String command = Serial.readString();
+        command.trim();
+        
+        switch (command.toInt()) {
+            case 1:
+                registerNewCard();
+                break;
+            case 2:
+                listRegisteredCards();
+                break;
+            case 3:
+                deleteCard();
+                break;
+            case 4:
+                continuousReadMode();
+                break;
+            default:
+                Serial.println("Comando no válido");
+                break;
+        }
+    }
+    
+    delay(100);
+}
+
+void connectToWiFi() {
+    Serial.print("Conectando a WiFi");
+    WiFi.begin(ssid, password);
+    
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+    
+    Serial.println();
+    Serial.println("WiFi conectado!");
+    Serial.print("IP address: ");
+    Serial.println(WiFi.localIP());
+}
+
+void registerNewCard() {
+    Serial.println("Acerca la tarjeta RFID para registrar...");
+    
+    // Esperar hasta que se detecte una tarjeta
+    while (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) {
+        delay(50);
+    }
+    
+    // Leer UID de la tarjeta
+    byte cardUID[4];
+    for (byte i = 0; i < 4; i++) {
+        cardUID[i] = mfrc522.uid.uidByte[i];
+    }
+    
+    // Verificar si la tarjeta ya está registrada
+    if (isCardRegistered(cardUID)) {
+        Serial.println("Esta tarjeta ya está registrada!");
+        return;
+    }
+    
+    // Solicitar nombre para la tarjeta
+    Serial.print("Ingresa el nombre para esta tarjeta: ");
+    while (!Serial.available()) {
+        delay(100);
+    }
+    
+    String cardName = Serial.readString();
+    cardName.trim();
+    
+    // Registrar la nueva tarjeta
+    if (cardCount < 50) {
+        memcpy(registeredCards[cardCount].uid, cardUID, 4);
+        cardName.toCharArray(registeredCards[cardCount].name, 32);
+        registeredCards[cardCount].active = true;
+        cardCount++;
+        
+        // Guardar en EEPROM
+        saveCardsToEEPROM();
+        
+        Serial.println("Tarjeta registrada exitosamente!");
+        Serial.print("UID: ");
+        printUID(cardUID);
+        Serial.println();
+        Serial.print("Nombre: ");
+        Serial.println(cardName);
+    } else {
+        Serial.println("Error: Máximo número de tarjetas alcanzado (50)");
+    }
+    
+    mfrc522.PICC_HaltA();
+}
+
+void listRegisteredCards() {
+    Serial.println("\\n=== TARJETAS REGISTRADAS ===");
+    
+    if (cardCount == 0) {
+        Serial.println("No hay tarjetas registradas");
+        return;
+    }
+    
+    for (int i = 0; i < cardCount; i++) {
+        if (registeredCards[i].active) {
+            Serial.print("ID: ");
+            Serial.print(i);
+            Serial.print(" | UID: ");
+            printUID(registeredCards[i].uid);
+            Serial.print(" | Nombre: ");
+            Serial.println(registeredCards[i].name);
+        }
+    }
+    Serial.println("============================\\n");
+}
+
+bool isCardRegistered(byte* uid) {
+    for (int i = 0; i < cardCount; i++) {
+        if (registeredCards[i].active && 
+            memcmp(registeredCards[i].uid, uid, 4) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void printUID(byte* uid) {
+    for (byte i = 0; i < 4; i++) {
+        if (uid[i] < 0x10) Serial.print("0");
+        Serial.print(uid[i], HEX);
+        if (i < 3) Serial.print(":");
+    }
+}
+
+void saveCardsToEEPROM() {
+    EEPROM.put(0, cardCount);
+    
+    for (int i = 0; i < cardCount; i++) {
+        int address = 4 + (i * sizeof(CardData));
+        EEPROM.put(address, registeredCards[i]);
+    }
+    
+    EEPROM.commit();
+}
+
+void loadCardsFromEEPROM() {
+    EEPROM.get(0, cardCount);
+    
+    // Validar el contador
+    if (cardCount < 0 || cardCount > 50) {
+        cardCount = 0;
+        return;
+    }
+    
+    for (int i = 0; i < cardCount; i++) {
+        int address = 4 + (i * sizeof(CardData));
+        EEPROM.get(address, registeredCards[i]);
+    }
+    
+    Serial.print("Cargadas ");
+    Serial.print(cardCount);
+    Serial.println(" tarjetas desde EEPROM");
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Main Code Section -->
+                    <section id="esp32-main-code" class="code-block">
+                        <div class="card">
+                            <h2 class="code-title">Código Principal del Sistema</h2>
+                            
+                            <div class="code-filename">
+                                <p style="font-size: 0.875rem;">
+                                    Archivo: <code>esp32_rfid_main.ino</code>
+                                </p>
+                            </div>
+                            
+                            <div style="background: var(--background); border: 1px solid var(--border); border-radius: var(--radius);">
+                                <pre class="language-cpp"><code class="language-cpp" data-testid="code-content">/*
+ * Sistema RFID Principal para ESP32
+ * Control de acceso con servidor web integrado y notificaciones WiFi
+ */
+
+#include <WiFi.h>
+#include <WebServer.h>
+#include <SPI.h>
+#include <MFRC522.h>
+#include <ArduinoJson.h>
+#include <EEPROM.h>
+
+// Configuración de pines
+#define RST_PIN    22
+#define SS_PIN     5
+#define LED_GREEN  2
+#define LED_RED    4
+#define BUZZER     15
+
+// Configuración WiFi
+const char* ssid = "TU_RED_WIFI";
+const char* password = "TU_PASSWORD";
+
+// Configuración del servidor web
+WebServer server(80);
+
+// Inicialización RFID
+MFRC522 mfrc522(SS_PIN, RST_PIN);
+
+// Variables del sistema
+bool systemActive = true;
+unsigned long lastCardTime = 0;
+const unsigned long CARD_TIMEOUT = 2000; // 2 segundos entre lecturas
+
+// Estructura para logs de acceso
+struct AccessLog {
+    byte uid[4];
+    unsigned long timestamp;
+    bool granted;
+};
+
+// Array para almacenar logs (últimos 100 accesos)
+AccessLog accessLogs[100];
+int logCount = 0;
+
+void setup() {
+    Serial.begin(115200);
+    
+    // Configurar pines
+    pinMode(LED_GREEN, OUTPUT);
+    pinMode(LED_RED, OUTPUT);
+    pinMode(BUZZER, OUTPUT);
+    
+    // LEDs y buzzer apagados inicialmente
+    digitalWrite(LED_GREEN, LOW);
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(BUZZER, LOW);
+    
+    // Inicializar SPI y RFID
+    SPI.begin();
+    mfrc522.PCD_Init();
+    
+    // Inicializar EEPROM
+    EEPROM.begin(4096);
+    
+    // Conectar WiFi
+    connectToWiFi();
+    
+    // Configurar rutas del servidor web
+    setupWebServer();
+    
+    // Iniciar servidor
+    server.begin();
+    
+    Serial.println("Sistema RFID ESP32 iniciado!");
+    Serial.print("Dirección IP: ");
+    Serial.println(WiFi.localIP());
+    
+    // Señal de inicio (3 beeps cortos)
+    for (int i = 0; i < 3; i++) {
+        digitalWrite(BUZZER, HIGH);
+        delay(100);
+        digitalWrite(BUZZER, LOW);
+        delay(100);
+    }
+}
+
+void loop() {
+    // Manejar solicitudes del servidor web
+    server.handleClient();
+    
+    // Verificar si el sistema está activo
+    if (!systemActive) {
+        delay(100);
+        return;
+    }
+    
+    // Verificar tarjetas RFID
+    if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
+        
+        // Evitar lecturas múltiples
+        if (millis() - lastCardTime < CARD_TIMEOUT) {
+            mfrc522.PICC_HaltA();
+            return;
+        }
+        
+        lastCardTime = millis();
+        
+        // Leer UID de la tarjeta
+        byte cardUID[4];
+        for (byte i = 0; i < 4; i++) {
+            cardUID[i] = mfrc522.uid.uidByte[i];
+        }
+        
+        // Procesar tarjeta
+        bool accessGranted = processCard(cardUID);
+        
+        // Registrar en log
+        logAccess(cardUID, accessGranted);
+        
+        // Respuesta visual y sonora
+        if (accessGranted) {
+            grantAccess();
+        } else {
+            denyAccess();
+        }
+        
+        mfrc522.PICC_HaltA();
+        
+        // Imprimir información en serial
+        Serial.print("Tarjeta: ");
+        printUID(cardUID);
+        Serial.print(" - Acceso: ");
+        Serial.println(accessGranted ? "CONCEDIDO" : "DENEGADO");
+    }
+    
+    delay(50);
+}
+
+void connectToWiFi() {
+    Serial.print("Conectando a WiFi");
+    WiFi.begin(ssid, password);
+    
+    int attempts = 0;
+    while (WiFi.status() != WL_CONNECTED && attempts < 20) {
+        delay(500);
+        Serial.print(".");
+        attempts++;
+    }
+    
+    if (WiFi.status() == WL_CONNECTED) {
+        Serial.println();
+        Serial.println("WiFi conectado!");
+        Serial.print("IP: ");
+        Serial.println(WiFi.localIP());
+    } else {
+        Serial.println();
+        Serial.println("Error: No se pudo conectar a WiFi");
+    }
+}
+
+bool processCard(byte* uid) {
+    // Aquí deberías implementar la lógica para verificar
+    // si la tarjeta está autorizada
+    // Por ahora, simular que ciertas tarjetas están autorizadas
+    
+    // Ejemplo: autorizar tarjetas que empiecen con ciertos bytes
+    if (uid[0] == 0x04 || uid[0] == 0x44) {
+        return true;
+    }
+    
+    return false;
+}
+
+void grantAccess() {
+    // LED verde encendido
+    digitalWrite(LED_GREEN, HIGH);
+    digitalWrite(LED_RED, LOW);
+    
+    // Dos beeps cortos
+    for (int i = 0; i < 2; i++) {
+        digitalWrite(BUZZER, HIGH);
+        delay(200);
+        digitalWrite(BUZZER, LOW);
+        delay(100);
+    }
+    
+    // Apagar LED después de 2 segundos
+    delay(2000);
+    digitalWrite(LED_GREEN, LOW);
+}
+
+void denyAccess() {
+    // LED rojo encendido
+    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_GREEN, LOW);
+    
+    // Un beep largo
+    digitalWrite(BUZZER, HIGH);
+    delay(800);
+    digitalWrite(BUZZER, LOW);
+    
+    // Apagar LED después de 2 segundos
+    delay(2000);
+    digitalWrite(LED_RED, LOW);
+}
+
+void printUID(byte* uid) {
+    for (byte i = 0; i < 4; i++) {
+        if (uid[i] < 0x10) Serial.print("0");
+        Serial.print(uid[i], HEX);
+        if (i < 3) Serial.print(":");
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- WiFi Configuration Section -->
+                    <section id="esp32-wifi" class="card" style="margin-bottom: 3rem;">
+                        <h2 class="section-title">Configuración WiFi y Conectividad</h2>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div>
+                                <h3 style="font-weight: 600; margin-bottom: 1rem; color: var(--accent);">Características WiFi del ESP32</h3>
+                                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>WiFi 802.11 b/g/n (2.4GHz)</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Modo Station y Access Point</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>WPA/WPA2 Security</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Servidor web integrado</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 style="font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Aplicaciones IoT</h3>
+                                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--primary); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Control remoto via web</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--primary); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Notificaciones en tiempo real</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--primary); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Logs de acceso remotos</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--primary); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Integración con APIs externas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box" style="margin-top: 1.5rem;">
+                            <h4 style="font-weight: 600; color: var(--primary); margin-bottom: 1rem;">Configuración Avanzada</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; font-size: 0.875rem;">
+                                <div>
+                                    <h5 style="font-weight: 500; margin-bottom: 0.5rem;">Configuración de Red</h5>
+                                    <pre style="background: var(--background); border-radius: var(--radius); padding: 0.5rem; font-size: 0.75rem;"><code>// IP estática
+WiFi.config(
+    IPAddress(192,168,1,100),
+    IPAddress(192,168,1,1),
+    IPAddress(255,255,255,0)
+);</code></pre>
+                                </div>
+                                <div>
+                                    <h5 style="font-weight: 500; margin-bottom: 0.5rem;">Servidor HTTPS</h5>
+                                    <pre style="background: var(--background); border-radius: var(--radius); padding: 0.5rem; font-size: 0.75rem;"><code>// Servidor seguro
+WiFiServerSecure server(443);
+server.setRSACert(cert, key);
+server.begin();</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Prism.js scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-arduino.min.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

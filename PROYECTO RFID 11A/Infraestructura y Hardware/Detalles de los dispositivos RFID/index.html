@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECNOLOGIA 11A - Raspberry Pi & ESP32 | Documentación Completa</title>
+    <meta name="description" content="Documentación completa de proyectos RFID con Raspberry Pi y ESP32. Tutoriales paso a paso, código fuente y diagramas de conexión en español.">
+    <meta name="keywords" content="RFID, Raspberry Pi, ESP32, IoT, Arduino, RC522, tutorial, documentación, español">
+    <meta name="author" content="RFID Projects Documentation">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Proyectos RFID - Raspberry Pi & ESP32">
+    <meta property="og:description" content="Documentación completa de proyectos RFID con tutoriales paso a paso y código fuente.">
+    <meta property="og:type" content="website">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="nav-brand">
+                    <a href="index.html" class="logo-link" data-testid="logo-link">
+                        <h1 class="logo">RFID Projects</h1>
+                    </a>
+                </div>
+                
+                <nav class="nav-desktop">
+                    <a href="index.html" class="nav-link active" data-testid="nav-home">Inicio</a>
+                    <a href="raspberry-pi.html" class="nav-link" data-testid="nav-raspberry-pi">RFID + Raspberry Pi</a>
+                    <a href="esp32.html" class="nav-link" data-testid="nav-esp32">RFID + ESP32</a>
+                </nav>
+                
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" data-testid="mobile-menu-toggle">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <nav class="nav-mobile" id="mobileMenu">
+                <a href="index.html" class="nav-link-mobile active" data-testid="mobile-nav-home">Inicio</a>
+                <a href="raspberry-pi.html" class="nav-link-mobile" data-testid="mobile-nav-raspberry-pi">RFID + Raspberry Pi</a>
+                <a href="esp32.html" class="nav-link-mobile" data-testid="mobile-nav-esp32">RFID + ESP32</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1 class="hero-title">
+                    <span class="gradient-text">TECNOLOGIA 11A - Raspberry Pi & ESP32 | Documentación Completa</span>
+                </h1>
+                <p class="hero-description">
+                    Explora dos implementaciones completas de sistemas RFID: una con Raspberry Pi para 
+                    control de asistencia y otra con ESP32 para aplicaciones IoT.
+                </p>
+            </section>
+
+            <!-- Project Cards -->
+            <section class="projects">
+                <!-- Raspberry Pi Project -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">RFID + Raspberry Pi</h3>
+                            <p class="project-subtitle">Sistema de control de asistencia</p>
+                        </div>
+                    </div>
+                    
+                    <div class="project-features">
+                        <div class="feature">
+                            <span class="feature-dot"></span>
+                            <span>Pantalla LCD 16x2 para visualización</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-dot"></span>
+                            <span>Base de datos web para gestión</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-dot"></span>
+                            <span>Lector RC522 RFID integrado</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-dot"></span>
+                            <span>Documentación completa en español</span>
+                        </div>
+                    </div>
+                    
+                    <a href="raspberry-pi.html" class="btn btn-primary" data-testid="view-raspberry-project">
+                        Ver Proyecto Completo →
+                    </a>
+                </div>
+
+                <!-- ESP32 Project -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon accent">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5 5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title accent">RFID + ESP32</h3>
+                            <p class="project-subtitle">Sistema IoT con conectividad WiFi</p>
+                        </div>
+                    </div>
+                    
+                    <div class="project-features">
+                        <div class="feature">
+                            <span class="feature-dot primary"></span>
+                            <span>Configuración de tarjetas RFID</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-dot primary"></span>
+                            <span>Conectividad WiFi integrada</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-dot primary"></span>
+                            <span>Código Arduino optimizado</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-dot primary"></span>
+                            <span>Ejemplos de implementación</span>
+                        </div>
+                    </div>
+                    
+                    <a href="esp32.html" class="btn btn-accent" data-testid="view-esp32-project">
+                        Ver Proyecto Completo →
+                    </a>
+                </div>
+            </section>
+
+            <!-- Features Overview -->
+            <section class="features-overview">
+                <div class="card">
+                    <h2 class="section-title">Características Principales</h2>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Documentación Completa</h3>
+                            <p class="feature-description">Tutoriales paso a paso, diagramas de conexión y guías de instalación detalladas.</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Código Fuente</h3>
+                            <p class="feature-description">Código completo con sintaxis destacada, comentarios explicativos y ejemplos de uso.</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Videos Tutoriales</h3>
+                            <p class="feature-description">Videos explicativos integrados que muestran el proceso de construcción y funcionamiento.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Prism.js scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-arduino.min.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

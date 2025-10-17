@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Asistencia RFID con Raspberry Pi | Documentación Completa</title>
+    <meta name="description" content="Tutorial completo del sistema de asistencia RFID con Raspberry Pi. Incluye código Python, diagramas de conexión, instalación y configuración paso a paso.">
+    <meta name="keywords" content="RFID, Raspberry Pi, RC522, LCD 16x2, Python, MySQL, asistencia, tutorial">
+    <meta name="author" content="RFID Projects Documentation">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Sistema de Asistencia RFID con Raspberry Pi">
+    <meta property="og:description" content="Tutorial completo del sistema de asistencia RFID con Raspberry Pi. Código Python y diagramas incluidos.">
+    <meta property="og:type" content="website">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="nav-brand">
+                    <a href="index.html" class="logo-link" data-testid="logo-link">
+                        <h1 class="logo">RFID Projects</h1>
+                    </a>
+                </div>
+                
+                <nav class="nav-desktop">
+                    <a href="index.html" class="nav-link" data-testid="nav-home">Inicio</a>
+                    <a href="raspberry-pi.html" class="nav-link active" data-testid="nav-raspberry-pi">RFID + Raspberry Pi</a>
+                    <a href="esp32.html" class="nav-link" data-testid="nav-esp32">RFID + ESP32</a>
+                </nav>
+                
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" data-testid="mobile-menu-toggle">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <nav class="nav-mobile" id="mobileMenu">
+                <a href="index.html" class="nav-link-mobile" data-testid="mobile-nav-home">Inicio</a>
+                <a href="raspberry-pi.html" class="nav-link-mobile active" data-testid="mobile-nav-raspberry-pi">RFID + Raspberry Pi</a>
+                <a href="esp32.html" class="nav-link-mobile" data-testid="mobile-nav-esp32">RFID + ESP32</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="content-layout">
+                <!-- Sidebar Navigation -->
+                <aside class="sidebar">
+                    <div class="sidebar-card">
+                        <h3 class="sidebar-title">Navegación del Proyecto</h3>
+                        <nav class="sidebar-nav">
+                            <a href="#rpi-overview" class="sidebar-link" data-testid="sidebar-rpi-overview">Descripción General</a>
+                            <a href="#rpi-video" class="sidebar-link" data-testid="sidebar-rpi-video">Video Tutorial</a>
+                            <a href="#rpi-components" class="sidebar-link" data-testid="sidebar-rpi-components">Componentes</a>
+                            <a href="#rpi-wiring" class="sidebar-link" data-testid="sidebar-rpi-wiring">Diagramas de Conexión</a>
+                            <a href="#rpi-installation" class="sidebar-link" data-testid="sidebar-rpi-installation">Instalación</a>
+                            <a href="#rpi-code" class="sidebar-link" data-testid="sidebar-rpi-code">Código Python</a>
+                            <a href="#rpi-web" class="sidebar-link" data-testid="sidebar-rpi-web">Interfaz Web</a>
+                        </nav>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="content-main">
+                    <!-- Project Header -->
+                    <div class="page-header">
+                        <h1 class="page-title" style="color: var(--primary)">
+                            Sistema de Asistencia RFID con Raspberry Pi
+                        </h1>
+                        <p class="page-description">
+                            Un sistema completo de control de asistencia que utiliza un lector RFID RC522, 
+                            pantalla LCD y base de datos web para gestionar el registro de usuarios.
+                        </p>
+                    </div>
+
+                    <!-- Overview Section -->
+                    <section id="rpi-overview" class="card" style="margin-bottom: 3rem;">
+                        <h2 class="section-title">Descripción General del Proyecto</h2>
+                        <div style="max-width: none;">
+                            <p style="margin-bottom: 1rem;">
+                                En este proyecto de sistema de asistencia RFID con Raspberry Pi, te mostramos 
+                                cómo configurar y programar tu propio sistema de asistencia que utiliza el 
+                                lector RFID RC522.
+                            </p>
+                            
+                            <p style="margin-bottom: 1rem;">
+                                A lo largo de este proyecto, aprenderás cómo armar un circuito que utiliza 
+                                tanto el lector RFID RC522 como una pantalla LCD de 16×2. Comenzamos 
+                                mostrándote todos los pasos necesarios para conectar estos circuitos a la 
+                                Raspberry Pi.
+                            </p>
+                            
+                            <div class="highlight-box" style="margin: 1.5rem 0;">
+                                <h3 class="highlight-title">Características Principales:</h3>
+                                <ul class="highlight-list">
+                                    <li>Lectura automática de tarjetas RFID</li>
+                                    <li>Visualización en pantalla LCD 16x2</li>
+                                    <li>Base de datos MySQL para almacenamiento</li>
+                                    <li>Interfaz web para gestión de usuarios</li>
+                                    <li>Registro de fechas y horarios de entrada/salida</li>
+                                </ul>
+                                
+                                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(66, 153, 225, 0.2);">
+                                    <a href="https://pimylifeup.com/raspberry-pi-rfid-attendance-system" 
+                                       target="_blank" 
+                                       rel="noopener noreferrer"
+                                       class="doc-link"
+                                       data-testid="documentation-link">
+                                        📚 Documentación Original Completa →
+                                    </a>
+                                    <p class="doc-description">
+                                        Enlace al tutorial original de PiMyLifeUp (en inglés)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Video Tutorial Section -->
+                    <section id="rpi-video" class="video-container">
+                        <h2 class="video-title">Video Tutorial</h2>
+                        <div class="video-wrapper">
+                            <iframe
+                                src="https://www.youtube.com/embed/T98ealydWZA?si=Ad5mSNcKdrC6qiUn"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen
+                                title="Tutorial Sistema RFID con Raspberry Pi"
+                                data-testid="video-T98ealydWZA">
+                            </iframe>
+                        </div>
+                        <p class="video-description">
+                            Tutorial completo que muestra el proceso de construcción y configuración del sistema RFID con Raspberry Pi.
+                        </p>
+                    </section>
+
+                    <!-- Components Section -->
+                    <section id="rpi-components" class="card" style="margin-bottom: 3rem;">
+                        <h2 class="section-title">Componentes Necesarios</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                            <div>
+                                <h3 style="font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Hardware Principal</h3>
+                                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--primary); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Raspberry Pi (cualquier modelo con GPIO)</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--primary); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Módulo RFID RC522</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--primary); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Pantalla LCD 16x2</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--primary); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Potenciómetro 10kΩ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 style="font-weight: 600; margin-bottom: 1rem; color: var(--accent);">Accesorios</h3>
+                                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Protoboard</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Cables jumper macho-hembra</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Tarjetas RFID de prueba</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; padding: 0.75rem; background: var(--secondary); border-radius: var(--radius);">
+                                        <span style="width: 0.75rem; height: 0.75rem; background: var(--accent); border-radius: 50%; margin-right: 0.75rem;"></span>
+                                        <span>Fuente de alimentación</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Wiring Diagrams Section -->
+                    <section id="rpi-wiring" class="card" style="margin-bottom: 3rem;">
+                        <h2 class="section-title">Diagramas de Conexión</h2>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                            <div>
+                                <h3 style="font-weight: 600; margin-bottom: 1rem;">Pines GPIO - LCD y RFID</h3>
+                                <img src="attached_assets/rfid-rc522-attendance-GPIO-Pins_1758671382541.webp" 
+                                     alt="Diagrama de pines GPIO para LCD y RFID" 
+                                     class="image-thumbnail"
+                                     data-testid="image-thumbnail">
+                            </div>
+                            <div>
+                                <h3 style="font-weight: 600; margin-bottom: 1rem;">Esquema de Conexión</h3>
+                                <img src="attached_assets/Raspberry-Pi-LCD-Display-and-RFID-RC522-Schematic_1758671382541.webp" 
+                                     alt="Esquema completo de conexiones" 
+                                     class="image-thumbnail"
+                                     data-testid="image-thumbnail">
+                            </div>
+                        </div>
+
+                        <!-- Connection Table -->
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Componente</th>
+                                        <th>Pin Componente</th>
+                                        <th>Pin Raspberry Pi</th>
+                                        <th>GPIO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">RC522 RFID</td>
+                                        <td>SDA</td>
+                                        <td>Pin 24</td>
+                                        <td style="color: var(--primary);">GPIO 8 (CE0)</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">RC522 RFID</td>
+                                        <td>SCK</td>
+                                        <td>Pin 23</td>
+                                        <td style="color: var(--primary);">GPIO 11 (SCLK)</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">RC522 RFID</td>
+                                        <td>MOSI</td>
+                                        <td>Pin 19</td>
+                                        <td style="color: var(--primary);">GPIO 10 (MOSI)</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">LCD 16x2</td>
+                                        <td>RS</td>
+                                        <td>Pin 7</td>
+                                        <td style="color: var(--accent);">GPIO 4</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">LCD 16x2</td>
+                                        <td>EN</td>
+                                        <td>Pin 11</td>
+                                        <td style="color: var(--accent);">GPIO 17</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">LCD 16x2</td>
+                                        <td>D4-D7</td>
+                                        <td>Pins 13,15,16,18</td>
+                                        <td style="color: var(--accent);">GPIO 27,22,23,24</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Installation Guide Section -->
+                    <section id="rpi-installation" class="card" style="margin-bottom: 3rem;">
+                        <h2 class="section-title">Guía de Instalación</h2>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 2rem;">
+                            <div class="step-guide">
+                                <h3 class="step-title">Paso 1: Preparar el Sistema</h3>
+                                <div class="step-content">
+                                    <p style="margin-bottom: 0.75rem;">Actualiza tu sistema Raspberry Pi e instala las dependencias necesarias:</p>
+                                    <pre style="margin: 0.75rem 0;"><code>sudo apt update && sudo apt upgrade -y
+sudo apt install python3-pip python3-dev mysql-server apache2 php php-mysql -y
+sudo pip3 install spidev mfrc522 mysql-connector-python RPi.GPIO</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="step-guide accent">
+                                <h3 class="step-title">Paso 2: Habilitar SPI</h3>
+                                <div class="step-content">
+                                    <p style="margin-bottom: 0.75rem;">Habilita la interfaz SPI para el módulo RFID:</p>
+                                    <pre style="margin: 0.75rem 0;"><code>sudo raspi-config
+# Navegar a: Interfacing Options > SPI > Enable > Yes</code></pre>
+                                    <p style="margin-top: 0.75rem; font-size: 0.875rem; color: var(--muted-foreground);">
+                                        Reinicia la Raspberry Pi después de habilitar SPI.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="step-guide">
+                                <h3 class="step-title">Paso 3: Configurar Base de Datos</h3>
+                                <div class="step-content">
+                                    <p style="margin-bottom: 0.75rem;">Crea la base de datos MySQL para el sistema:</p>
+                                    <pre style="margin: 0.75rem 0;"><code>sudo mysql -u root -p
+CREATE DATABASE attendance_system;
+USE attendance_system;
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    rfid_uid VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE attendance (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    check_in TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    check_out TIMESTAMP NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Python Code Section -->
+                    <section id="rpi-code" class="code-block">
+                        <div class="card">
+                            <h2 class="code-title">Código Principal (Python)</h2>
+                            
+                            <div class="code-filename">
+                                <p style="font-size: 0.875rem;">
+                                    Archivo: <code>attendance_system.py</code>
+                                </p>
+                            </div>
+                            
+                            <div style="background: var(--background); border: 1px solid var(--border); border-radius: var(--radius);">
+                                <pre class="language-python"><code class="language-python" data-testid="code-content">#!/usr/bin/env python3
+"""
+Sistema de Asistencia RFID para Raspberry Pi
+Utiliza el módulo RC522 y pantalla LCD 16x2
+"""
+
+import RPi.GPIO as GPIO
+import mysql.connector
+from mfrc522 import SimpleMFRC522
+import time
+from datetime import datetime
+import sys
+
+# Configuración de pines LCD
+LCD_RS = 4
+LCD_EN = 17
+LCD_D4 = 27
+LCD_D5 = 22
+LCD_D6 = 23
+LCD_D7 = 24
+
+class AttendanceSystem:
+    def __init__(self):
+        """Inicializa el sistema de asistencia"""
+        self.reader = SimpleMFRC522()
+        self.setup_lcd()
+        self.setup_database()
+        
+    def setup_lcd(self):
+        """Configura la pantalla LCD"""
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(LCD_EN, GPIO.OUT)
+        GPIO.setup(LCD_RS, GPIO.OUT)
+        GPIO.setup(LCD_D4, GPIO.OUT)
+        GPIO.setup(LCD_D5, GPIO.OUT)
+        GPIO.setup(LCD_D6, GPIO.OUT)
+        GPIO.setup(LCD_D7, GPIO.OUT)
+        
+        # Inicializar LCD
+        self.lcd_init()
+        
+    def setup_database(self):
+        """Configura la conexión a la base de datos"""
+        try:
+            self.db = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="tu_password",  # Cambiar por tu password
+                database="attendance_system"
+            )
+            self.cursor = self.db.cursor()
+            print("Conexión a base de datos exitosa")
+        except mysql.connector.Error as err:
+            print(f"Error de base de datos: {err}")
+            sys.exit(1)
+            
+    def lcd_init(self):
+        """Inicializa la pantalla LCD"""
+        # Secuencia de inicialización LCD
+        GPIO.output(LCD_EN, False)
+        GPIO.output(LCD_RS, False)
+        time.sleep(0.01)
+        
+        # Comandos de inicialización
+        self.lcd_byte(0x33, False)
+        self.lcd_byte(0x32, False)
+        self.lcd_byte(0x28, False)
+        self.lcd_byte(0x0C, False)
+        self.lcd_byte(0x06, False)
+        self.lcd_byte(0x01, False)
+        
+    def lcd_byte(self, bits, mode):
+        """Envía un byte a la pantalla LCD"""
+        GPIO.output(LCD_RS, mode)
+        
+        # Bits superiores
+        GPIO.output(LCD_D4, False)
+        GPIO.output(LCD_D5, False)
+        GPIO.output(LCD_D6, False)
+        GPIO.output(LCD_D7, False)
+        
+        if bits & 0x10 == 0x10:
+            GPIO.output(LCD_D4, True)
+        if bits & 0x20 == 0x20:
+            GPIO.output(LCD_D5, True)
+        if bits & 0x40 == 0x40:
+            GPIO.output(LCD_D6, True)
+        if bits & 0x80 == 0x80:
+            GPIO.output(LCD_D7, True)
+            
+        self.lcd_toggle_enable()
+        
+        # Bits inferiores
+        GPIO.output(LCD_D4, False)
+        GPIO.output(LCD_D5, False)
+        GPIO.output(LCD_D6, False)
+        GPIO.output(LCD_D7, False)
+        
+        if bits & 0x01 == 0x01:
+            GPIO.output(LCD_D4, True)
+        if bits & 0x02 == 0x02:
+            GPIO.output(LCD_D5, True)
+        if bits & 0x04 == 0x04:
+            GPIO.output(LCD_D6, True)
+        if bits & 0x08 == 0x08:
+            GPIO.output(LCD_D7, True)
+            
+        self.lcd_toggle_enable()
+        
+    def lcd_toggle_enable(self):
+        """Activa el pin enable del LCD"""
+        time.sleep(0.0005)
+        GPIO.output(LCD_EN, True)
+        time.sleep(0.0005)
+        GPIO.output(LCD_EN, False)
+        time.sleep(0.0005)
+        
+    def lcd_string(self, message, line):
+        """Muestra un string en la pantalla LCD"""
+        message = message.ljust(16, " ")
+        
+        self.lcd_byte(line, False)
+        
+        for i in range(16):
+            self.lcd_byte(ord(message[i]), True)
+            
+    def get_user_by_rfid(self, rfid_uid):
+        """Busca un usuario por su UID RFID"""
+        query = "SELECT id, name FROM users WHERE rfid_uid = %s"
+        self.cursor.execute(query, (str(rfid_uid),))
+        return self.cursor.fetchone()
+        
+    def record_attendance(self, user_id):
+        """Registra la asistencia del usuario"""
+        # Verificar si ya hay un check-in sin check-out
+        query = "SELECT id FROM attendance WHERE user_id = %s AND check_out IS NULL"
+        self.cursor.execute(query, (user_id,))
+        active_session = self.cursor.fetchone()
+        
+        if active_session:
+            # Hacer check-out
+            query = "UPDATE attendance SET check_out = %s WHERE id = %s"
+            self.cursor.execute(query, (datetime.now(), active_session[0]))
+            return "check_out"
+        else:
+            # Hacer check-in
+            query = "INSERT INTO attendance (user_id) VALUES (%s)"
+            self.cursor.execute(query, (user_id,))
+            return "check_in"
+            
+        self.db.commit()
+        
+    def run(self):
+        """Ejecuta el bucle principal del sistema"""
+        print("Sistema de Asistencia RFID iniciado")
+        self.lcd_string("Sistema RFID", 0x80)
+        self.lcd_string("Listo...", 0xC0)
+        
+        try:
+            while True:
+                print("Acerca una tarjeta RFID...")
+                
+                # Leer tarjeta RFID
+                rfid_uid, text = self.reader.read()
+                
+                print(f"Tarjeta detectada: {rfid_uid}")
+                
+                # Buscar usuario
+                user = self.get_user_by_rfid(rfid_uid)
+                
+                if user:
+                    user_id, name = user
+                    action = self.record_attendance(user_id)
+                    
+                    # Mostrar en LCD
+                    self.lcd_string(name[:16], 0x80)
+                    
+                    if action == "check_in":
+                        self.lcd_string("Entrada: " + datetime.now().strftime("%H:%M"), 0xC0)
+                        print(f"Check-in: {name}")
+                    else:
+                        self.lcd_string("Salida: " + datetime.now().strftime("%H:%M"), 0xC0)
+                        print(f"Check-out: {name}")
+                        
+                else:
+                    # Usuario no encontrado
+                    self.lcd_string("Usuario no", 0x80)
+                    self.lcd_string("encontrado", 0xC0)
+                    print("Usuario no registrado")
+                    
+                time.sleep(3)
+                
+                # Limpiar pantalla
+                self.lcd_string("Sistema RFID", 0x80)
+                self.lcd_string("Listo...", 0xC0)
+                
+        except KeyboardInterrupt:
+            print("\nSistema detenido por el usuario")
+        finally:
+            self.cleanup()
+            
+    def cleanup(self):
+        """Limpia los recursos utilizados"""
+        GPIO.cleanup()
+        if hasattr(self, 'db'):
+            self.db.close()
+        print("Recursos liberados")
+
+if __name__ == "__main__":
+    system = AttendanceSystem()
+    system.run()</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Web Interface Section -->
+                    <section id="rpi-web" class="card" style="margin-bottom: 3rem;">
+                        <h2 class="section-title">Interfaz Web de Gestión</h2>
+                        
+                        <p style="margin-bottom: 1.5rem; color: var(--muted-foreground);">
+                            El sistema incluye una interfaz web desarrollada en PHP para gestionar usuarios y 
+                            visualizar registros de asistencia.
+                        </p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                            <div>
+                                <h3 style="font-weight: 600; margin-bottom: 1rem;">Página Principal</h3>
+                                <img src="attached_assets/RFID-Attendance-System-Index-Page_1758671382540.webp" 
+                                     alt="Interfaz principal del sistema web de asistencia" 
+                                     class="image-thumbnail"
+                                     data-testid="image-thumbnail"
+                                     style="width: 100%; margin-bottom: 0.75rem;">
+                                <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                                    Panel principal con acceso a usuarios y registros de asistencia.
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h3 style="font-weight: 600; margin-bottom: 1rem;">Gestión de Usuarios</h3>
+                                <img src="attached_assets/RFID-Attendance-System-Users-Page_1758671382539.webp" 
+                                     alt="Página de gestión de usuarios del sistema" 
+                                     class="image-thumbnail"
+                                     data-testid="image-thumbnail"
+                                     style="width: 100%; margin-bottom: 0.75rem;">
+                                <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                                    Interfaz para agregar, editar y eliminar usuarios del sistema.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box accent" style="margin-top: 2rem;">
+                            <h4 style="font-weight: 600; color: var(--accent); margin-bottom: 0.5rem;">Funcionalidades Web</h4>
+                            <ul class="highlight-list">
+                                <li>Registro de nuevos usuarios</li>
+                                <li>Visualización de registros de asistencia</li>
+                                <li>Exportación de datos a CSV</li>
+                                <li>Reportes por fechas</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Prism.js scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-arduino.min.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
